@@ -14,6 +14,7 @@ import {
   ChevronLeft,
 } from 'lucide-react';
 import { useCursorTooltip } from '../common/CursorTooltip';
+import { fetchReorderSuggestions, fetchProducts } from '../../services/api';
 import styles from './AppShell.module.css';
 
 export type NavTab =
@@ -240,12 +241,22 @@ export const AppShell: React.FC<AppShellProps> = ({
                   <button
                     className={`${styles.navBtn} ${isActive ? styles.navBtnActive : ''}`}
                     onClick={() => onTabChange(item.id)}
-                    onMouseEnter={(e) => showTooltip(item.label, item.shortcut, e)}
+                    onMouseEnter={(e) => {
+                      showTooltip(item.label, item.shortcut, e);
+                      // Prefetch antecipado da Inteligência Preditiva ao passar o mouse na aba
+                      if (item.id === 'predictive') {
+                        fetchReorderSuggestions().catch(() => {});
+                        fetchProducts().catch(() => {});
+                      }
+                    }}
                     onMouseMove={updatePosition}
                     onMouseLeave={hideTooltip}
                     onFocus={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect();
                       showTooltip(item.label, item.shortcut, { clientX: rect.right + 10, clientY: rect.top + 16 } as any);
+                      if (item.id === 'predictive') {
+                        fetchReorderSuggestions().catch(() => {});
+                      }
                     }}
                     onBlur={hideTooltip}
                     aria-label={`${item.label} (${item.shortcut})`}

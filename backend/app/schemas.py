@@ -282,6 +282,17 @@ class ForecastResponse(BaseModel):
     projecao_diaria: List[ForecastDay]
 
 
+class ForecastBatchRequest(BaseModel):
+    product_ids: Optional[List[int]] = Field(default=None, description="Lista de IDs de produtos")
+    skus: Optional[List[str]] = Field(default=None, description="Lista de SKUs")
+    horizon_days: int = Field(default=7, ge=1, le=30, description="Horizonte de projeção em dias")
+
+
+class ForecastBatchResponse(BaseModel):
+    forecasts: List[ForecastResponse]
+    horizon_days: int
+
+
 class ReorderSuggestionResponse(BaseModel):
     product_id: Optional[int] = None
     sku: str

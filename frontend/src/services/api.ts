@@ -567,11 +567,24 @@ export async function fetchDashboardKPIs(
   };
 }
 
+// Cache em memória de previsões no cliente (TTL 3 minutos) para carregamento instantâneo
+const _forecastCache = new Map<string, { data: ForecastResponse; expiresAt: number }>();
+
+export function clearForecastCache(): void {
+  _forecastCache.clear();
+}
+
 export async function fetchForecast(productId: number, horizonDays = 7): Promise<ForecastResponse> {
+  const cacheKey = `single_${productId}_${horizonDays}`;
+  const cached = _forecastCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.data;
+  }
+
   const res = await fetch(`${BASE_URL}/ml/forecast?product_id=${productId}&horizon_days=${horizonDays}`);
   if (!res.ok) throw new Error('Falha ao obter previsão de demanda');
   const raw = await res.json();
-  return {
+  const response: ForecastResponse = {
     product_id: productId,
     sku: raw.sku,
     product_name: raw.product_nome || raw.product_name || '',
@@ -583,6 +596,71 @@ export async function fetchForecast(productId: number, horizonDays = 7): Promise
     total_forecasted_units: raw.total_previsto_horizonte ?? 0,
     model_used: 'RandomForestRegressor (regressor_random_forest.pkl)',
   };
+
+  _forecastCache.set(cacheKey, { data: response, expiresAt: Date.now() + 3 * 60 * 1000 });
+  return response;
+}
+
+export async function fetchForecastBatch(productIds: number[], horizonDays = 7): Promise<ForecastResponse[]> {
+  if (productIds.length === 0) return [];
+
+  // Verifica os que já estão em cache
+  const missingIds: number[] = [];
+  const results: ForecastResponse[] = [];
+
+  for (const id of productIds) {
+    const cacheKey = `single_${id}_${horizonDays}`;
+    const cached = _forecastCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now()) {
+      results.push(cached.data);
+    } else {
+      missingIds.push(id);
+    }
+  }
+
+  if (missingIds.length === 0) {
+    return results;
+  }
+
+  try {
+    const res = await fetch(`${BASE_URL}/ml/forecast/batch`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ product_ids: missingIds, horizon_days: horizonDays }),
+    });
+
+    if (!res.ok) throw new Error('Falha ao obter previsões em lote');
+    const raw = await res.json();
+    const fetched: ForecastResponse[] = (raw.forecasts || []).map((f: any) => {
+      const resp: ForecastResponse = {
+        product_id: 0, // Será vinculado pelo caller/SKU
+        sku: f.sku,
+        product_name: f.product_nome || f.product_name || '',
+        horizon_days: horizonDays,
+        daily_forecast: (f.projecao_diaria || []).map((d: any, index: number) => ({
+          day_offset: index + 1,
+          forecasted_units: Math.round(d.demanda_prevista ?? d.forecasted_units ?? 0),
+        })),
+        total_forecasted_units: f.total_previsto_horizonte ?? 0,
+        model_used: 'RandomForestRegressor (regressor_random_forest.pkl)',
+      };
+      return resp;
+    });
+
+    for (const item of fetched) {
+      results.push(item);
+    }
+    return results;
+  } catch {
+    // Fallback gracioso: busca individual paralela caso o endpoint de lote falhe
+    const individual = await Promise.all(
+      missingIds.map((id) => fetchForecast(id, horizonDays).catch(() => null))
+    );
+    for (const item of individual) {
+      if (item) results.push(item);
+    }
+    return results;
+  }
 }
 
 export async function fetchReorderSuggestions(): Promise<ReorderSuggestionItem[]> {

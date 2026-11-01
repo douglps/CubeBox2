@@ -18,6 +18,8 @@ from backend.app.database import get_db
 from backend.app.models import Product, PurchaseOrder, InventoryLoss
 from backend.app.schemas import (
     ForecastResponse,
+    ForecastBatchRequest,
+    ForecastBatchResponse,
     ReorderSuggestionResponse,
     ClusterProductInfo,
     PurchaseOrderCreate,
@@ -67,6 +69,46 @@ def get_demand_forecast(
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(e))
 
 
+@router.post("/ml/forecast/batch", response_model=ForecastBatchResponse)
+def get_demand_forecast_batch(
+    payload: ForecastBatchRequest,
+    db: Session = Depends(get_db)
+):
+    """
+    Gera projeções diárias em lote (Batch Forecasting) para múltiplos produtos em um único round-trip.
+    Reduz overhead de rede e latência no comparador preditivo multi-SKU.
+    """
+    horizon = payload.horizon_days or 7
+    query = db.query(Product)
+
+    if payload.product_ids:
+        products = query.filter(Product.id.in_(payload.product_ids)).all()
+    elif payload.skus:
+        products = query.filter(Product.sku.in_(payload.skus)).all()
+    else:
+        raise HTTPException(status_code=400, detail="Forneça ao menos 'product_ids' ou 'skus'.")
+
+    forecasts: List[ForecastResponse] = []
+    for prod in products:
+        try:
+            daily_proj = ml_service.predict_demand_7d(sku=prod.sku, days=horizon)
+            total_previsto = sum(item['demanda_prevista'] for item in daily_proj)
+            forecasts.append(ForecastResponse(
+                sku=prod.sku,
+                product_nome=prod.nome,
+                total_previsto_horizonte=round(total_previsto, 1),
+                projecao_diaria=daily_proj
+            ))
+        except Exception:
+            # Fallback seguro caso falhe em um SKU isolado
+            continue
+
+    return ForecastBatchResponse(
+        forecasts=forecasts,
+        horizon_days=horizon
+    )
+
+
 # ==========================================
 # MODEL SERVING: SUGESTÃO DE REABASTECIMENTO
 # ==========================================
@@ -91,6 +133,13 @@ def update_cache_product_inventory(product_id: int, new_estoque: int):
             break
 
 
+def invalidate_reorder_cache():
+    """Invalida o cache para forçar recálculo na próxima requisição ou após emissão de ordens."""
+    global _REORDER_CACHE
+    _REORDER_CACHE["timestamp"] = 0.0
+    _REORDER_CACHE["data"] = []
+
+
 @router.get("/ml/reorder-suggestions", response_model=List[ReorderSuggestionResponse])
 def get_reorder_suggestions(force: bool = False, db: Session = Depends(get_db)):
     """
@@ -107,6 +156,14 @@ def get_reorder_suggestions(force: bool = False, db: Session = Depends(get_db)):
     products = db.query(Product).all()
     suggestions = []
     today_weekday = datetime.now().weekday()
+
+    # Busca todas as ordens de compra PENDENTES (em trânsito)
+    pending_orders = db.query(PurchaseOrder.product_id, PurchaseOrder.quantidade).filter(
+        PurchaseOrder.status == "PENDENTE"
+    ).all()
+    pending_map: dict[int, int] = {}
+    for pid, qty in pending_orders:
+        pending_map[pid] = pending_map.get(pid, 0) + qty
 
     clusters_data = {c['sku']: c for c in ml_service.get_clusters_summary()}
 
@@ -135,10 +192,17 @@ def get_reorder_suggestions(force: bool = False, db: Session = Depends(get_db)):
         taxa_quebra = 0.01
         perdas_estimadas = demanda_7d * taxa_quebra
 
-        # Fórmula de Ressuprimento Formal do SDD
-        # Qtd = max(0, Demanda + Estoque_Minimo + Perdas - Estoque_Atual)
-        qtd_necessaria = (demanda_7d + prod.estoque_minimo + perdas_estimadas) - prod.estoque_atual
+        # Fórmula de Ressuprimento Formal do SDD considerando ordens já emitidas em trânsito:
+        # Qtd = max(0, Demanda + Estoque_Minimo + Perdas - (Estoque_Atual + Qtd_Pendente))
+        qtd_pendente = pending_map.get(prod.id, 0)
+        estoque_projetado = prod.estoque_atual + qtd_pendente
+        qtd_necessaria = (demanda_7d + prod.estoque_minimo + perdas_estimadas) - estoque_projetado
         qtd_sugerida = max(0, int(round(qtd_necessaria)))
+
+        # Se já existe ordem pendente suficiente para cobrir o risco ou se a quantidade necessária é zero,
+        # o item não precisa mais de nova compra recomendada
+        if qtd_pendente > 0 and qtd_sugerida == 0 and risco_label == 'Alto Risco':
+            risco_label = 'Medio Risco'
 
         suggestions.append(ReorderSuggestionResponse(
             product_id=prod.id,
@@ -203,6 +267,9 @@ def create_purchase_order(order_in: PurchaseOrderCreate, db: Session = Depends(g
     db.add(po)
     db.commit()
     db.refresh(po)
+
+    # Invalida o cache para que a linha com ordem emitida seja recalculada / atualizada na interface
+    invalidate_reorder_cache()
 
     return PurchaseOrderResponse(
         id=po.id,

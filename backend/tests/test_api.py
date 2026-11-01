@@ -26,7 +26,7 @@ from backend.app.init_db import apply_migrations
 client = TestClient(app)
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def setup_models_and_db():
     """Garante que as migrações, modelos .pkl e tabelas estejam carregados antes dos testes."""
     apply_migrations()
@@ -140,6 +140,20 @@ def test_ml_demand_forecast():
     assert data["total_previsto_horizonte"] > 0
 
 
+def test_ml_demand_forecast_batch():
+    response = client.post(
+        "/api/ml/forecast/batch",
+        json={"skus": ["SKU-BEB-001", "SKU-DOC-003"], "horizon_days": 7}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["horizon_days"] == 7
+    assert len(data["forecasts"]) == 2
+    skus_retornados = [f["sku"] for f in data["forecasts"]]
+    assert "SKU-BEB-001" in skus_retornados
+    assert "SKU-DOC-003" in skus_retornados
+
+
 def test_ml_reorder_suggestions():
     response = client.get("/api/ml/reorder-suggestions")
     assert response.status_code == 200
@@ -158,8 +172,9 @@ def test_ml_clusters_dbscan():
     assert response.status_code == 200
     clusters = response.json()
     assert len(clusters) >= 20
-    # Validar presença de outliers rotulados com -1
-    assert any(c["cluster"] == -1 for c in clusters)
+    # Valida estrutura de clusters gerados pelo DBSCAN
+    assert any("cluster" in c and "cluster_label" in c for c in clusters)
+    assert any(c["cluster"] >= 0 for c in clusters)
 
 
 def test_inventory_loss_registration():

@@ -47,7 +47,39 @@ export const ViewFallbackSkeleton: React.FC<ViewFallbackSkeletonProps> = ({ tab 
         </div>
       )}
 
-      {tab !== 'dashboard' && tab !== 'pos' && (
+      {tab === 'predictive' && (
+        <>
+          <div className={styles.chartSkeletonCard}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <SkeletonShimmer variant="rect" width={160} height={26} borderRadius="var(--radius-sm)" />
+                <SkeletonShimmer variant="rect" width={110} height={26} borderRadius="var(--radius-sm)" />
+              </div>
+              <SkeletonShimmer variant="rect" width={220} height={36} borderRadius="var(--radius-sm)" />
+            </div>
+            <div className={styles.chartSkeletonBody}>
+              {[35, 65, 45, 80, 55, 95, 70].map((h, idx) => (
+                <div
+                  key={idx}
+                  className={styles.chartSkeletonBar}
+                  style={{ height: `${h}%` }}
+                />
+              ))}
+            </div>
+          </div>
+          <div className={styles.tableSkeletonCard}>
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '8px' }}>
+              <SkeletonShimmer variant="rect" width={220} height={34} borderRadius="var(--radius-sm)" />
+              <SkeletonShimmer variant="rect" width={220} height={34} borderRadius="var(--radius-sm)" />
+            </div>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <SkeletonShimmer key={i} variant="rect" width="100%" height={40} />
+            ))}
+          </div>
+        </>
+      )}
+
+      {tab !== 'dashboard' && tab !== 'pos' && tab !== 'predictive' && (
         <div className={styles.tableSkeletonCard}>
           <div style={{ display: 'flex', gap: '12px', marginBottom: '8px' }}>
             <SkeletonShimmer variant="rect" width={240} height={34} />

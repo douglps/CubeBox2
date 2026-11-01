@@ -36,7 +36,7 @@ import {
 } from 'recharts';
 import {
   fetchProducts,
-  fetchForecast,
+  fetchForecastBatch,
   fetchReorderSuggestions,
   fetchPurchases,
   createPurchaseOrder,
@@ -165,7 +165,7 @@ export const PredictiveView: React.FC = () => {
     }
 
     setIsLoadingChart(true);
-    Promise.all(selectedProductIds.map((id) => fetchForecast(id, 7).catch(() => null)))
+    fetchForecastBatch(selectedProductIds, 7)
       .then((forecasts) => {
         const daysMap: Record<number, Record<string, any>> = {};
         for (let d = 1; d <= 7; d++) {
@@ -175,10 +175,10 @@ export const PredictiveView: React.FC = () => {
           };
         }
 
-        forecasts.forEach((f, idx) => {
+        forecasts.forEach((f) => {
           if (!f) return;
-          const prod = products.find((p) => p.id === selectedProductIds[idx]);
-          const seriesKey = prod ? prod.name : `Produto ${selectedProductIds[idx]}`;
+          const prod = products.find((p) => p.sku === f.sku || p.name === f.product_name);
+          const seriesKey = prod ? prod.name : f.product_name;
           f.daily_forecast.forEach((df) => {
             if (daysMap[df.day_offset]) {
               daysMap[df.day_offset][seriesKey] = df.forecasted_units;
@@ -255,13 +255,15 @@ export const PredictiveView: React.FC = () => {
         message: `Pedido de compra de ${orderQty} un. para ${purchaseModalItem.product_name} emitido com status PENDENTE.`,
       });
       setPurchaseModalItem(null);
-      // Atualiza pedidos e estoque de forma otimizada sem loading bloqueante
-      const [updatedPurchases, updatedProds] = await Promise.all([
+      // Atualiza pedidos, estoque e sugestões recalculadas sem loading bloqueante
+      const [updatedPurchases, updatedProds, updatedSuggs] = await Promise.all([
         fetchPurchases(),
         fetchProducts(),
+        fetchReorderSuggestions(),
       ]);
       setPurchases(updatedPurchases);
       setProducts(updatedProds);
+      setSuggestions(updatedSuggs);
     } catch (err: unknown) {
       setFeedback({
         type: 'error',
@@ -597,22 +599,32 @@ export const PredictiveView: React.FC = () => {
 
               {isLoadingChart ? (
                 <div
-                  style={{
-                    height: dynamicChartHeight,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '12px',
-                    borderRadius: 'var(--radius-sm)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.01)',
-                  }}
+                  className={styles.chartSkeletonContainer}
+                  style={{ height: dynamicChartHeight }}
+                  role="status"
                   aria-busy="true"
+                  aria-label="Calculando projeções em tempo real"
                 >
-                  <Spinner size="md" variant="primary" label="Calculando projeções em tempo real..." />
-                  <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>
-                    Calculando projeções em tempo real com Random Forest...
-                  </span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Spinner size="sm" variant="primary" />
+                      <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+                        Carregando modelo Random Forest...
+                      </span>
+                    </div>
+                    <span style={{ fontSize: 11, color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)' }}>
+                      Horizonte 7 Dias
+                    </span>
+                  </div>
+                  <div className={styles.chartSkeletonWave}>
+                    {[40, 65, 50, 85, 60, 92, 75].map((val, idx) => (
+                      <div
+                        key={idx}
+                        className={styles.chartSkeletonColumn}
+                        style={{ height: `${val}%`, animationDelay: `${idx * 0.12}s` }}
+                      />
+                    ))}
+                  </div>
                 </div>
               ) : chartData.length > 0 ? (
                 <ResponsiveContainer width="100%" height={dynamicChartHeight}>
@@ -730,7 +742,7 @@ export const PredictiveView: React.FC = () => {
             onClick={() => setActiveTab('suggestions')}
           >
             <TrendingUp size={16} />
-            <span>Sugestões de Compra ({suggestions.length})</span>
+            <span>Sugestões de Compra ({suggestions.filter((s) => s.suggested_reorder_qty > 0).length})</span>
           </button>
           <button
             className={`${styles.tabBtn} ${activeTab === 'orders' ? styles.tabActive : ''}`}
@@ -751,12 +763,12 @@ export const PredictiveView: React.FC = () => {
           {activeTab === 'suggestions' ? (
             <DataTable
               columns={suggestionColumns}
-              data={suggestions}
+              data={suggestions.filter((s) => s.suggested_reorder_qty > 0)}
               keyExtractor={(s) => s.product_id}
               pagination={true}
               defaultPageSize={10}
               isLoading={isLoadingInitial}
-              emptyMessage="Nenhuma sugestão de reposição no momento."
+              emptyMessage="Nenhuma sugestão de reposição no momento. Todos os estoques estão protegidos!"
             />
           ) : (
             <DataTable
@@ -944,6 +956,7 @@ export const PredictiveView: React.FC = () => {
         isOpen={!!purchaseModalItem}
         onClose={() => setPurchaseModalItem(null)}
         title="Aprovar Emissão de Pedido de Compra"
+        size="md"
         footer={
           <>
             <Button
@@ -971,7 +984,7 @@ export const PredictiveView: React.FC = () => {
                 <span>Estoque Atual: {purchaseModalItem.current_stock} un.</span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                   Demanda Projetada: {purchaseModalItem.forecasted_demand_7d} un.
-                  <XaiBadge modelType="RANDOM_FOREST" size="sm" label="RF" alignTooltip="left" />
+                  <XaiBadge modelType="RANDOM_FOREST" size="sm" label="RF" alignTooltip="right" />
                 </span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                   Risco: {purchaseModalItem.stockout_risk_level} ({purchaseModalItem.stockout_probability_pct}%)

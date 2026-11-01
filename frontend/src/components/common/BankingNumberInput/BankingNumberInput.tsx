@@ -122,6 +122,19 @@ export const BankingNumberInput = forwardRef<HTMLInputElement, BankingNumberInpu
       return;
     }
 
+    const input = e.currentTarget;
+    const hasSelection =
+      input.selectionStart !== null &&
+      input.selectionEnd !== null &&
+      input.selectionEnd > input.selectionStart;
+
+    // Tecla Delete ou Backspace com seleção ativa
+    if (hasSelection && (e.key === 'Delete' || e.key === 'Backspace')) {
+      e.preventDefault();
+      handleClear();
+      return;
+    }
+
     // Tecla Delete: zera o valor
     if (e.key === 'Delete') {
       e.preventDefault();
@@ -162,8 +175,9 @@ export const BankingNumberInput = forwardRef<HTMLInputElement, BankingNumberInpu
       e.preventDefault();
       const digit = parseInt(e.key, 10);
 
-      // Desloca para a esquerda (x10) e adiciona o novo dígito à direita
-      const newUnits = currentRawUnits * 10 + digit;
+      // Se houver seleção ativa (ex: campo selecionado), o novo dígito substitui a seleção
+      // iniciando um novo ciclo ao invés de concatenar à direita
+      const newUnits = hasSelection ? digit : currentRawUnits * 10 + digit;
 
       // Limite de segurança de 12 dígitos (R$ 999.999.999,99)
       if (newUnits > 999999999999) return;

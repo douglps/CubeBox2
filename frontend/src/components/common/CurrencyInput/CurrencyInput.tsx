@@ -60,6 +60,19 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
       return;
     }
 
+    const input = e.currentTarget;
+    const hasSelection =
+      input.selectionStart !== null &&
+      input.selectionEnd !== null &&
+      input.selectionEnd > input.selectionStart;
+
+    // Se houver seleção ativa e pressionar Backspace ou Delete, zera o valor
+    if (hasSelection && (e.key === 'Backspace' || e.key === 'Delete')) {
+      e.preventDefault();
+      notifyChange(0);
+      return;
+    }
+
     if (e.key === 'Backspace') {
       e.preventDefault();
       // Remove o último dígito à direita (divisão inteira por 10)
@@ -92,8 +105,8 @@ export const CurrencyInput: React.FC<CurrencyInputProps> = ({
     if (/^[0-9]$/.test(e.key)) {
       e.preventDefault();
       const digit = parseInt(e.key, 10);
-      // Desloca para a esquerda multiplicando por 10 e adiciona o novo dígito à direita
-      const newCents = effectiveCents * 10 + digit;
+      // Se houver seleção ativa, substitui o valor iniciando com o novo dígito
+      const newCents = hasSelection ? digit : effectiveCents * 10 + digit;
       // Limite de segurança de 99 milhões de centavos (R$ 999.999,99)
       if (newCents <= 99999999) {
         notifyChange(newCents);

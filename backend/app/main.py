@@ -30,11 +30,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.exc import SQLAlchemyError
 
 from backend.app.config import settings
-from backend.app.database import engine, Base
+from backend.app.database import engine, Base, SessionLocal
 from backend.app.init_db import apply_migrations
 from backend.app.services.ml_service import ml_service
 from backend.app.routers.operations import router as ops_router
-from backend.app.routers.ml_routes import router as ml_router
+from backend.app.routers.ml_routes import router as ml_router, get_reorder_suggestions
 from backend.app.routers.dashboard import router as dash_router
 from backend.app.routers.data_routes import router as data_router
 
@@ -52,6 +52,18 @@ async def lifespan(app: FastAPI):
     apply_migrations()
     Base.metadata.create_all(bind=engine)
     ml_service.load_models()
+
+    # [Aquecimento da IA / Zero Cold-Start]: Pré-calcula e aquece o cache em memória RAM
+    # Garante que o primeiro carregamento da tela de IA no frontend seja instantâneo (sub-20ms)
+    import sys, os
+    if "pytest" not in sys.modules and not os.environ.get("SKIP_WARMUP"):
+        try:
+            with SessionLocal() as db:
+                get_reorder_suggestions(force=True, db=db)
+            print("[SUCESSO] Cache preditivo pré-aquecido na inicialização da loja.")
+        except Exception as exc:
+            logger.warning(f"[AVISO] Falha no pré-aquecimento assíncrono de IA: {exc}")
+
     yield
     print("[INFO] Fechando as portas da API CubeBox Enterprise.")
 

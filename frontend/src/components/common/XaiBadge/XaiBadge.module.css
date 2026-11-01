@@ -27,18 +27,17 @@
   outline: none;
 }
 
-.tooltip {
-  position: absolute;
-  top: calc(100% + 8px);
-  width: 320px;
-  max-width: calc(100vw - 32px);
+.tooltipPortal {
+  position: fixed;
+  width: min(320px, calc(100vw - 32px));
+  max-width: 90vw;
   box-sizing: border-box;
   background: var(--bg-surface-elevated, #1e222d);
   border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
   border-radius: var(--radius-sm, 6px);
   padding: 12px 14px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
-  z-index: 1200;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+  z-index: 10000;
   pointer-events: none;
   font-size: 11px;
   color: var(--text-primary, #f1f5f9);
@@ -49,25 +48,18 @@
   letter-spacing: normal;
   word-break: break-word;
   overflow-wrap: break-word;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  animation: fadeInTooltip 0.15s ease-out;
 }
 
-.tooltipCenter {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.tooltipLeft {
-  left: 0;
-  transform: translateX(0);
-}
-
-.tooltipRight {
-  right: 0;
-  left: auto;
-  transform: translateX(0);
+@keyframes fadeInTooltip {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .badgeSm {
@@ -78,27 +70,6 @@
 
 .wrapperSm {
   font-size: 10px;
-}
-
-.xaiBadgeWrapper:hover .tooltipCenter,
-.xaiBadgeWrapper:focus-within .tooltipCenter {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-.xaiBadgeWrapper:hover .tooltipLeft,
-.xaiBadgeWrapper:focus-within .tooltipLeft {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0) translateY(0);
-}
-
-.xaiBadgeWrapper:hover .tooltipRight,
-.xaiBadgeWrapper:focus-within .tooltipRight {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0) translateY(0);
 }
 
 .tooltipHeader {
