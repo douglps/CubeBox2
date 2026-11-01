@@ -203,6 +203,8 @@ export const OrdersHistoryView: React.FC = () => {
           DINHEIRO: 'Dinheiro',
           CREDITO: 'Crédito',
           DEBITO: 'Débito',
+          CARTAO_CREDITO: 'Crédito',
+          CARTAO_DEBITO: 'Débito',
           PIX: 'PIX',
           'CARTAO CREDITO': 'Crédito',
           'CARTAO DEBITO': 'Débito',
@@ -215,6 +217,7 @@ export const OrdersHistoryView: React.FC = () => {
           'VALE REFEICAO / ALIMENTACAO': 'VR/VA',
           'VALE REFEIÇÃO / ALIMENTAÇÃO': 'VR/VA',
           'CARTEIRA DIGITAL': 'Carteira Digital',
+          CARTEIRA_DIGITAL: 'Carteira Digital',
         };
 
         const raw = s.payment_method?.trim() || '';
@@ -262,7 +265,10 @@ export const OrdersHistoryView: React.FC = () => {
           return <Badge variant="neutral">Múltiplo</Badge>;
         }
 
-        return <Badge variant="neutral">{labels[s.payment_method] || s.payment_method}</Badge>;
+        const normalizedMethod = raw.toUpperCase().replace(/\s+/g, '_');
+        const formattedLabel = labels[raw] || labels[raw.toUpperCase()] || labels[normalizedMethod] || raw;
+
+        return <Badge variant="neutral">{formattedLabel}</Badge>;
       },
     },
     {

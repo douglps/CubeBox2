@@ -76,9 +76,19 @@ _REORDER_CACHE = {
 }
 
 
-def invalidate_reorder_cache():
+def update_cache_product_inventory(product_id: int, new_estoque: int):
+    """Atualiza cirurgicamente o item afetado no cache em memória sem recalcular toda a IA."""
     global _REORDER_CACHE
-    _REORDER_CACHE["timestamp"] = 0.0
+    if not _REORDER_CACHE["data"]:
+        return
+    for item in _REORDER_CACHE["data"]:
+        if item.product_id == product_id:
+            item.estoque_atual = new_estoque
+            taxa_quebra = item.taxa_quebra_hist or 0.01
+            perdas = item.demanda_prevista_7d * taxa_quebra
+            qtd = (item.demanda_prevista_7d + item.estoque_minimo + perdas) - new_estoque
+            item.quantidade_sugerida = max(0, int(round(qtd)))
+            break
 
 
 @router.get("/ml/reorder-suggestions", response_model=List[ReorderSuggestionResponse])
@@ -193,7 +203,6 @@ def create_purchase_order(order_in: PurchaseOrderCreate, db: Session = Depends(g
     db.add(po)
     db.commit()
     db.refresh(po)
-    invalidate_reorder_cache()
 
     return PurchaseOrderResponse(
         id=po.id,
@@ -249,10 +258,10 @@ def receive_purchase_order(order_id: int, db: Session = Depends(get_db)):
     product = db.query(Product).filter(Product.id == po.product_id).with_for_update().first()
     if product:
         product.estoque_atual += po.quantidade
+        update_cache_product_inventory(product.id, product.estoque_atual)
 
     db.commit()
     db.refresh(po)
-    invalidate_reorder_cache()
 
     return PurchaseOrderResponse(
         id=po.id,

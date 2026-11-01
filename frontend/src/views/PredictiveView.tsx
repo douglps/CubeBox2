@@ -255,7 +255,13 @@ export const PredictiveView: React.FC = () => {
         message: `Pedido de compra de ${orderQty} un. para ${purchaseModalItem.product_name} emitido com status PENDENTE.`,
       });
       setPurchaseModalItem(null);
-      loadData();
+      // Atualiza pedidos e estoque de forma otimizada sem loading bloqueante
+      const [updatedPurchases, updatedProds] = await Promise.all([
+        fetchPurchases(),
+        fetchProducts(),
+      ]);
+      setPurchases(updatedPurchases);
+      setProducts(updatedProds);
     } catch (err: unknown) {
       setFeedback({
         type: 'error',
@@ -274,7 +280,15 @@ export const PredictiveView: React.FC = () => {
         type: 'success',
         message: `Recebimento confirmado! As unidades foram integradas e creditadas no estoque físico.`,
       });
-      loadData();
+      // Atualiza pedidos, produtos e sugestões sem disparar skeleton shimmer bloqueante
+      const [updatedPurchases, updatedProds, updatedSuggs] = await Promise.all([
+        fetchPurchases(),
+        fetchProducts(),
+        fetchReorderSuggestions(),
+      ]);
+      setPurchases(updatedPurchases);
+      setProducts(updatedProds);
+      setSuggestions(updatedSuggs);
     } catch (err: unknown) {
       setFeedback({
         type: 'error',
