@@ -1,0 +1,20 @@
+{
+  "name": "cubebox-root",
+  "version": "1.0.0",
+  "description": "CubeBox Mini - Sistema Preditivo Integrado de Compras e Vendas",
+  "private": true,
+  "scripts": {
+    "lab": "powershell -ExecutionPolicy Bypass -File ./scripts/lab.ps1",
+    "lab:fast": "powershell -ExecutionPolicy Bypass -File ./scripts/lab.ps1 -NoBuild",
+    "start": "start.bat",
+    "build": "npm --prefix frontend run build"
+  },
+  "keywords": [
+    "cubebox",
+    "fastapi",
+    "react",
+    "machine-learning"
+  ],
+  "author": "",
+  "license": "ISC"
+}

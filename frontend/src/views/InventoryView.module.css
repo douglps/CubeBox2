@@ -1,0 +1,277 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: 24px 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+/* Grid de Cards de Categorias (Hub Nível 1) */
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.categoryCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.categoryCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-interactive-primary);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.categoryCardMaster {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-elevated) 100%);
+  border: 2px solid var(--color-interactive-primary);
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.1);
+}
+
+.categoryCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.categoryCardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.categoryCardCount {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.categoryMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.metricLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.metricValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.metricValueWarning {
+  color: #eab308;
+}
+
+.metricValueCritical {
+  color: #ef4444;
+}
+
+/* Barra de Navegação do Drilldown (Nível 2) */
+.drilldownBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.drilldownInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quickFilters {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.quickFilterBtn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quickFilterBtn:hover {
+  border-color: var(--color-interactive-primary);
+  color: var(--text-primary);
+}
+
+.quickFilterBtnActive {
+  background: var(--color-interactive-primary);
+  border-color: var(--color-interactive-primary);
+  color: #ffffff;
+}
+
+.searchBox {
+  width: 300px;
+}
+
+.tableCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.skuBadge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background-color: var(--bg-surface-elevated);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.productName {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.productCategory {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.stockNumber {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.stockCritical {
+  color: var(--status-danger-fg) !important;
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.feedbackSuccess {
+  background-color: var(--status-success-bg);
+  border-left: 4px solid var(--status-success);
+  color: var(--status-success-fg);
+}
+
+.feedbackError {
+  background-color: var(--status-danger-bg);
+  border-left: 4px solid var(--status-danger);
+  color: var(--status-danger-fg);
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.modalInfoBanner {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface-elevated);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--font-size-sm);
+}
+
+.modalInfoBanner span {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fieldLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.selectInput {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-3);
+  height: 38px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.selectInput:focus {
+  border-color: var(--color-interactive-primary);
+}

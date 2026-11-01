@@ -1,0 +1,140 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.helpButton {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  cursor: help;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.helpButton:hover,
+.helpButton:focus-visible {
+  color: var(--color-interactive-primary);
+  outline: none;
+}
+
+.inputBox {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-3);
+  min-height: var(--touch-target-min, 38px);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  position: relative;
+}
+
+.inputBox:focus-within {
+  border-color: var(--color-interactive-primary);
+  box-shadow: 0 0 0 3px var(--action-focus-ring);
+}
+
+.inputBox.hasError {
+  border-color: var(--status-danger);
+}
+
+.inputBox.hasError:focus-within {
+  border-color: var(--status-danger);
+  box-shadow: 0 0 0 3px var(--danger-glow);
+}
+
+.inputBox.isDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--bg-inset);
+}
+
+.prefix {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  user-select: none;
+  margin-right: var(--space-2);
+  flex-shrink: 0;
+}
+
+.suffix {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  user-select: none;
+  margin-left: var(--space-2);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  outline: none;
+  width: 100%;
+  padding: var(--space-2) 0;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+.clearBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  margin-left: var(--space-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-standard);
+  flex-shrink: 0;
+}
+
+.clearBtn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface-elevated);
+}
+
+.helperText {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.errorText {
+  font-size: 11px;
+  color: var(--status-danger);
+  font-weight: 500;
+}

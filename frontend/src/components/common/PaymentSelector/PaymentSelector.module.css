@@ -1,0 +1,106 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cardWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-2-5);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  min-height: 40px;
+  box-sizing: border-box;
+}
+
+.card:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-strong);
+}
+
+.card:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.cardSelected {
+  background-color: var(--primary-glow);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Tooltip Flutuante estilo Aside */
+.floatingTooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  z-index: var(--z-tooltip, 1600);
+  pointer-events: none;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.cardWrapper:hover .floatingTooltip,
+.cardWrapper:focus-within .floatingTooltip {
+  display: flex;
+}
+
+.tooltipLabel {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.tooltipKbd {
+  font-size: 10px;
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}

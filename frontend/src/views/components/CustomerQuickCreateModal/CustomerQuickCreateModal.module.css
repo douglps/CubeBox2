@@ -1,0 +1,290 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.errorAlert {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--status-danger-subtle, rgba(239, 68, 68, 0.1));
+  border: 1px solid var(--status-danger, #ef4444);
+  border-radius: var(--radius-sm);
+  color: var(--status-danger, #ef4444);
+  font-size: 13px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fieldLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Pills Toggle para Ativo / Inativo */
+.pillToggleGroup {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--bg-surface-elevated, #1a2234);
+  border: 1px solid var(--border-subtle, #2a3449);
+  border-radius: 9999px;
+  padding: 3px;
+  gap: 3px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.pillBtn {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  user-select: none;
+  height: 100%;
+}
+
+.pillBtnActive {
+  background-color: var(--status-success, #10b981);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.pillBtnInactive {
+  background-color: var(--bg-surface-active, #4b5563);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Seção de Endereços */
+.addressSectionHeader {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.sectionTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Switch Toggle iOS/Modern Style para Sem Endereço */
+.noAddressSwitchWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: var(--bg-surface-active, #374151);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle, #4b5563);
+}
+
+.toggleSwitchChecked {
+  background-color: var(--color-interactive-primary, #3b82f6);
+  border-color: var(--color-interactive-primary, #3b82f6);
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.toggleThumbChecked {
+  transform: translateX(16px);
+}
+
+.toggleLabelText {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Lista Compacta de Endereços Salvos */
+.savedAddressesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: var(--space-2);
+}
+
+.addressItemCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--bg-surface-elevated, #1a2234);
+  border: 1px solid var(--border-subtle, #2a3449);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s ease;
+}
+
+.addressItemCardDefault {
+  border-color: var(--color-interactive-primary, #3b82f6);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.addressItemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.addressItemHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addressAlias {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.defaultBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  background-color: var(--status-success-subtle, rgba(16, 185, 129, 0.15));
+  color: var(--status-success, #10b981);
+  border: 1px solid var(--status-success, #10b981);
+  text-transform: uppercase;
+}
+
+.addressItemDetails {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.makeDefaultBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  background-color: transparent;
+  color: var(--color-interactive-primary, #3b82f6);
+  border: 1px solid var(--border-subtle, #2a3449);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.makeDefaultBtn:hover:not(:disabled) {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: var(--color-interactive-primary, #3b82f6);
+}
+
+.makeDefaultBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Colapsável de Inclusão de Novo Endereço */
+.accordionToggleBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--bg-surface-elevated, #1a2234);
+  border: 1px dashed var(--border-subtle, #2a3449);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: var(--space-2);
+}
+
+.accordionToggleBtn:hover {
+  border-color: var(--color-interactive-primary);
+  background-color: var(--bg-surface-hover, rgba(255, 255, 255, 0.04));
+}
+
+.accordionLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.accordionContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background-color: var(--bg-surface-subtle, rgba(255, 255, 255, 0.01));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-2);
+}
+
+.setNewAsDefaultRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}

@@ -1,0 +1,38 @@
+.flagCard {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 4px 10px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.flagCard:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-strong);
+}
+
+.flagEmoji {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.metaCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.countryLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.currencyCode {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}

@@ -1,0 +1,412 @@
+.modalSplitLayout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100%;
+  min-height: 480px;
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+@media (max-width: 820px) {
+  .modalSplitLayout {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+/* Coluna 1 - Resumo da Venda */
+.summaryPane {
+  background-color: var(--bg-surface-elevated);
+  border-right: 1px solid var(--border-subtle);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow-y: auto;
+}
+
+.paneTitle {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-tertiary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.customerBox {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.customerBoxName {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.customerBoxSub {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+.itemsSummary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+  max-height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-xs);
+  padding: var(--space-2);
+}
+
+.summaryItemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.summaryItemRow:last-child {
+  border-bottom: none;
+}
+
+.summaryItemName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 170px;
+  color: var(--text-secondary);
+}
+
+.summaryItemVal {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.financialSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: var(--space-2);
+}
+
+.financeRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.financeRowVal {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.totalHighlightBox {
+  margin-top: auto;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--color-interactive-primary);
+  border-radius: var(--radius-xs);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.totalHighlightLabel {
+  font-size: 10px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.totalHighlightAmount {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-interactive-primary);
+  line-height: 1.1;
+}
+
+/* Coluna 2 - Condições & Pagamento */
+.controlsPane {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  overflow-y: auto;
+}
+
+.sectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Modalidade de Entrega */
+.modalDeliveryToggles {
+  display: flex;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  background-color: var(--bg-surface-elevated);
+}
+
+.modalDeliveryBtn {
+  flex: 1;
+  padding: 6px var(--space-2);
+  background: transparent;
+  border: none;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.modalDeliveryBtn:hover {
+  color: var(--text-primary);
+}
+
+.modalDeliveryActive {
+  background-color: var(--color-interactive-primary);
+  color: var(--text-inverse) !important;
+  font-weight: var(--font-weight-semibold);
+}
+
+.deliveryFeeInline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: 4px;
+}
+
+.deliveryFeeLabel {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Descontos Compactos */
+.discountCompactRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.syncIcon {
+  color: var(--text-tertiary);
+  font-size: 12px;
+}
+
+/* Formas de Pagamento */
+.modalPaymentGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+}
+
+.modalPayBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: var(--space-2) var(--space-1);
+  background-color: var(--bg-surface-elevated);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+}
+
+.modalPayBtn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.modalPayActive {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--color-interactive-primary) !important;
+  color: var(--color-interactive-primary) !important;
+  box-shadow: 0 0 0 1px var(--color-interactive-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Painel de Dinheiro e Troco */
+.cashPanel {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cashRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.quickNotes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.notePill {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 3px 8px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.notePill:hover {
+  border-color: var(--color-interactive-primary);
+  color: var(--color-interactive-primary);
+}
+
+.changeDisplay {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-xs);
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border-subtle);
+}
+
+.changeSuccess {
+  border-color: var(--status-success);
+  background-color: rgba(16, 185, 129, 0.08);
+}
+
+.changeDeficit {
+  border-color: var(--status-warning);
+  background-color: rgba(245, 158, 11, 0.08);
+}
+
+.changeLabel {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+}
+
+.changeAmount {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--status-success);
+}
+
+.changeDeficitAmount {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--status-warning);
+}
+
+/* CPF na Nota */
+.modalCpfRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-1);
+}
+
+.cpfCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.modalCpfInput {
+  flex: 1;
+  max-width: 220px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.modalCpfInput:focus {
+  border-color: var(--color-interactive-primary);
+}
+
+/* Footer do Modal */
+.modalFooterContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+

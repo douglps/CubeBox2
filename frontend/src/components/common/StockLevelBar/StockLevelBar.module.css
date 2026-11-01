@@ -1,0 +1,170 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-3);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+/* Coluna do Velocímetro */
+.gaugeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 0 0 130px;
+}
+
+.gaugeWrapper {
+  position: relative;
+  width: 120px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+}
+
+.gaugeSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.needle {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 2px;
+  height: 32px;
+  background-color: var(--text-primary);
+  transform-origin: bottom center;
+  transition: transform var(--transition-normal);
+  border-radius: var(--radius-full);
+}
+
+.needlePivot {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  height: 7px;
+  background-color: var(--text-primary);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-surface-elevated);
+}
+
+.mainValueRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.currentVal {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.uomText {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.statusPill {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid currentColor;
+  margin-left: var(--space-1);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* Coluna do Gráfico em Linha (Trend & Forecast) */
+.trendSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.trendHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trendTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+}
+
+.trendLegend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 10px;
+  font-family: var(--font-mono);
+}
+
+.legendHistory {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.legendForecast {
+  color: var(--status-info);
+  font-weight: 600;
+}
+
+.trendSvgWrapper {
+  width: 100%;
+  height: 68px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 2px;
+}
+
+.trendSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chartPointGroup {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.chartPointGroup:hover circle {
+  r: 5px;
+}
+
+.trendSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  padding: 0 var(--space-1);
+}
+
+.trendSummary strong {
+  color: var(--text-primary);
+}

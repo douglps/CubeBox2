@@ -1,0 +1,353 @@
+/* ==========================================================================
+   CubeBox Enterprise Design System — Tokens Fundacionais (W3C DTCG Full Spec)
+   Dimensão 1: Cores, Espaçamento, Z-Index, Elevações, Radii, Opacidades, Grids
+   ========================================================================== */
+
+:root {
+  /* ========================================================================
+     B. Grade Geométrica de Espaçamento (Base-4 / Base-8)
+     ======================================================================== */
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Aliases Semânticos de Inset & Gap */
+  --space-inset-compact: var(--space-2) var(--space-3);
+  --space-inset-normal: var(--space-3) var(--space-4);
+  --space-inset-card: var(--space-5) var(--space-6);
+
+  /* ========================================================================
+     C. Sistema de Stacking Context & Z-Index (Anti-Z-Index War)
+     ======================================================================== */
+  --z-base: 0;
+  --z-table-sticky: 10;
+  --z-nav: 100;
+  --z-dropdown: 1000;
+  --z-drawer: 1200;
+  --z-modal: 1300;
+  --z-popover: 1400;
+  --z-toast: 1500;
+  --z-tooltip: 1600;
+
+  /* ========================================================================
+     E. Geometria de Bordas, Traços & Radii
+     ======================================================================== */
+  --stroke-hairline: 1px;
+  --stroke-focus: 2px;
+  --stroke-accent: 4px;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* ========================================================================
+     F. Opacidades Semânticas
+     ======================================================================== */
+  --opacity-disabled: 0.38;
+  --opacity-hover: 0.08;
+  --opacity-focus: 0.12;
+  --opacity-backdrop: 0.60;
+
+  /* ========================================================================
+     G. Breakpoints & Limites de Container
+     ======================================================================== */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+
+  /* ========================================================================
+     H. Tipografia & Escala Modular (Opção 4 Oficial: Quiet Luxury Executive)
+     ======================================================================== */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+
+  /* Font Sizes */
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-lg: 18px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 26px;
+  --font-size-3xl: 32px;
+
+  /* Line Heights (Unitless) */
+  --leading-none: 1.0;
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Tracking / Letter Spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.05em;
+
+  /* ========================================================================
+     I. Acessibilidade (A11y WCAG 2.1 AA Tokens)
+     ======================================================================== */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--primary);
+  --focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
+  --touch-target-min: 44px;
+
+  /* Motion Curves & Timing System (Craft Frontend Motion) */
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  --ease-linear: linear;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  --transition-fast: var(--duration-fast) var(--ease-standard);
+  --transition-normal: var(--duration-normal) var(--ease-standard);
+  --transition-smooth: var(--duration-normal) var(--ease-out-quint);
+  --transition-spring: var(--duration-slow) var(--ease-spring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --transition-fast: 0ms linear !important;
+    --transition-normal: 0ms linear !important;
+    --transition-smooth: 0ms linear !important;
+    --transition-spring: 0ms linear !important;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   TEMA CLARO (LIGHT MODE) — Fundo Gelo Cerúleo #E1EEF3
+   ========================================================================== */
+:root,
+[data-theme="light"] {
+  /* Superfícies */
+  --bg-app: #e1eef3;
+  --bg-canvas: #e1eef3;
+  --bg-surface: #edf5f8;
+  --bg-surface-elevated: #f6fafb;
+  --bg-surface-hover: #d7e7ee;
+  --bg-inset: #d7e6ec;
+  --bg-glass: rgba(237, 245, 248, 0.90);
+
+  /* Bordas */
+  --border-subtle: #c2d7e1;
+  --border-strong: #8eaec0;
+  --border-focus: #0284c7;
+  --border-active: #0284c7;
+
+  /* Tipografia (#373737 como primária sólida) */
+  --text-primary: #373737;
+  --text-secondary: #566772;
+  --text-muted: #7b8e99;
+  --text-disabled: #a4b4bd;
+  --text-inverse: #f6fafb;
+
+  /* Ações & Foco */
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --primary-active: #075985;
+  --primary-glow: rgba(2, 132, 199, 0.15);
+  --primary-contrast: #f6fafb;
+  --action-focus-ring: rgba(2, 132, 199, 0.30);
+
+  /* Feedback Anti-Pânico: Tipografia contrastante e legível sobre fundo claro (WCAG AAA) */
+  --status-success: #14532d;
+  --status-success-subtle: rgba(20, 83, 45, 0.12);
+  --success: #14532d;
+  --success-glow: rgba(20, 83, 45, 0.18);
+
+  --status-warning: #854d0e;
+  --status-warning-subtle: rgba(133, 77, 14, 0.12);
+  --warning: #854d0e;
+  --warning-glow: rgba(133, 77, 14, 0.18);
+
+  --status-danger: #991b1b;
+  --status-danger-subtle: rgba(153, 27, 27, 0.12);
+  --danger: #991b1b;
+  --danger-glow: rgba(153, 27, 27, 0.18);
+
+  --status-info: #1e40af;
+  --status-info-subtle: rgba(30, 64, 175, 0.12);
+  --info: #1e40af;
+  --accent-purple: #6b21a8;
+
+  /* Elevações Compostas (Direct + Ambient Light) */
+  --shadow-sm: 0 1px 2px 0 rgba(30, 50, 60, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(30, 50, 60, 0.07), 0 2px 4px -2px rgba(30, 50, 60, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(30, 50, 60, 0.09), 0 4px 6px -4px rgba(30, 50, 60, 0.04);
+  --shadow-modal: 0 20px 25px -5px rgba(30, 50, 60, 0.12), 0 8px 10px -6px rgba(30, 50, 60, 0.06);
+  --shadow-glow: 0 0 15px -2px var(--primary-glow);
+
+  /* Estados de Carregamento & Skeleton Shimmer (Evidente no Light Mode) */
+  --skeleton-base: #cadce5;
+  --skeleton-highlight: #ffffff;
+  --skeleton-wave: linear-gradient(
+    90deg,
+    #cadce5 0%,
+    #cadce5 25%,
+    #ffffff 50%,
+    #cadce5 75%,
+    #cadce5 100%
+  );
+  --spinner-track: rgba(2, 132, 199, 0.16);
+  --spinner-active: #0284c7;
+}
+
+/* ==========================================================================
+   TEMA ESCURO (DARK MODE) — Grafite Profundo / Base #181818 & #373737
+   ========================================================================== */
+[data-theme="dark"] {
+  /* Superfícies */
+  --bg-app: #181818;
+  --bg-canvas: #181818;
+  --bg-surface: #242424;
+  --bg-surface-elevated: #2f2f2f;
+  --bg-surface-hover: #373737;
+  --bg-inset: #1d1d1d;
+  --bg-glass: rgba(36, 36, 36, 0.88);
+
+  /* Bordas */
+  --border-subtle: #373737;
+  --border-strong: #4a4a4a;
+  --border-focus: #38bdf8;
+  --border-active: #38bdf8;
+
+  /* Tipografia */
+  --text-primary: #ededed;
+  --text-secondary: #a8a8a8;
+  --text-muted: #737373;
+  --text-disabled: #4a4a4a;
+  --text-inverse: #181818;
+
+  /* Ações & Foco */
+  --primary: #38bdf8;
+  --primary-hover: #7dd3fc;
+  --primary-active: #0284c7;
+  --primary-glow: rgba(56, 189, 248, 0.20);
+  --primary-contrast: #181818;
+  --action-focus-ring: rgba(56, 189, 248, 0.35);
+
+  /* Feedback Anti-Pânico: Fundo neutro sutil no escuro & tipografia brilhante WCAG AAA */
+  --status-success: #4ade80;
+  --status-success-subtle: rgba(74, 222, 128, 0.12);
+  --success: #4ade80;
+  --success-glow: rgba(74, 222, 128, 0.15);
+
+  --status-warning: #fbbf24;
+  --status-warning-subtle: rgba(251, 191, 36, 0.12);
+  --warning: #fbbf24;
+  --warning-glow: rgba(251, 191, 36, 0.15);
+
+  --status-danger: #f87171;
+  --status-danger-subtle: rgba(248, 113, 113, 0.12);
+  --danger: #f87171;
+  --danger-glow: rgba(248, 113, 113, 0.15);
+
+  --status-info: #60a5fa;
+  --status-info-subtle: rgba(96, 165, 250, 0.12);
+  --info: #60a5fa;
+  --accent-purple: #c084fc;
+
+  /* Elevações Compostas no Escuro */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px -2px var(--primary-glow);
+
+  /* Estados de Carregamento & Skeleton Shimmer (Alto Contraste no Dark Mode) */
+  --skeleton-base: #202630;
+  --skeleton-highlight: #3b4657;
+  --skeleton-wave: linear-gradient(
+    90deg,
+    #202630 0%,
+    #202630 25%,
+    #3b4657 50%,
+    #202630 75%,
+    #202630 100%
+  );
+  --spinner-track: rgba(56, 189, 248, 0.18);
+  --spinner-active: #38bdf8;
+}
+
+/* Fallback Prefers-Color-Scheme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --bg-app: #181818;
+    --bg-canvas: #181818;
+    --bg-surface: #242424;
+    --bg-surface-elevated: #2f2f2f;
+    --bg-surface-hover: #373737;
+    --bg-inset: #1d1d1d;
+    --bg-glass: rgba(36, 36, 36, 0.88);
+
+    --border-subtle: #373737;
+    --border-strong: #4a4a4a;
+    --border-focus: #38bdf8;
+    --border-active: #38bdf8;
+
+    --text-primary: #ededed;
+    --text-secondary: #a8a8a8;
+    --text-muted: #737373;
+    --text-disabled: #4a4a4a;
+    --text-inverse: #181818;
+
+    --primary: #38bdf8;
+    --primary-hover: #7dd3fc;
+    --primary-active: #0284c7;
+    --primary-glow: rgba(56, 189, 248, 0.20);
+    --primary-contrast: #181818;
+    --action-focus-ring: rgba(56, 189, 248, 0.35);
+
+    --status-success: #4ade80;
+    --status-success-subtle: rgba(74, 222, 128, 0.12);
+    --success: #4ade80;
+
+    --status-warning: #fbbf24;
+    --status-warning-subtle: rgba(251, 191, 36, 0.12);
+    --warning: #fbbf24;
+
+    --status-danger: #f87171;
+    --status-danger-subtle: rgba(248, 113, 113, 0.12);
+    --danger: #f87171;
+
+    --status-info: #60a5fa;
+    --status-info-subtle: rgba(96, 165, 250, 0.12);
+    --info: #60a5fa;
+    --accent-purple: #c084fc;
+  }
+}

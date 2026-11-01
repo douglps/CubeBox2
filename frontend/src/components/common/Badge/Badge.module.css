@@ -1,0 +1,108 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.badge_sm {
+  padding: 2px 8px;
+  font-size: 10px;
+}
+
+.badge_md {
+  padding: 4px 10px;
+  font-size: var(--font-size-xs);
+}
+
+.pulseDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  position: relative;
+}
+
+.pulseDot::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: inherit;
+  animation: pulseRipple 1.8s ease-out infinite;
+  opacity: 0.7;
+}
+
+@keyframes pulseRipple {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.badge_success {
+  background-color: var(--bg-surface-elevated);
+  color: var(--status-success);
+  border-color: rgba(22, 101, 52, 0.35);
+}
+:global([data-theme="dark"]) .badge_success {
+  border-color: rgba(74, 222, 128, 0.4);
+}
+.badge_success .pulseDot {
+  background-color: var(--status-success);
+}
+
+.badge_warning {
+  background-color: var(--bg-surface-elevated);
+  color: var(--status-warning);
+  border-color: rgba(154, 52, 18, 0.35);
+}
+:global([data-theme="dark"]) .badge_warning {
+  border-color: rgba(251, 191, 36, 0.4);
+}
+.badge_warning .pulseDot {
+  background-color: var(--status-warning);
+}
+
+.badge_danger {
+  background-color: var(--bg-surface-elevated);
+  color: var(--status-danger);
+  border-color: rgba(153, 27, 27, 0.35);
+}
+:global([data-theme="dark"]) .badge_danger {
+  border-color: rgba(248, 113, 113, 0.4);
+}
+.badge_danger .pulseDot {
+  background-color: var(--status-danger);
+}
+
+.badge_info {
+  background-color: var(--bg-surface-elevated);
+  color: var(--status-info);
+  border-color: rgba(30, 64, 175, 0.35);
+}
+:global([data-theme="dark"]) .badge_info {
+  border-color: rgba(96, 165, 250, 0.4);
+}
+.badge_info .pulseDot {
+  background-color: var(--status-info);
+}
+
+.badge_neutral {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+.badge_neutral .pulseDot {
+  background-color: var(--text-muted);
+}

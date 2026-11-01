@@ -1,0 +1,411 @@
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+  text-align: left;
+}
+
+.th {
+  background-color: var(--bg-inset);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-table-sticky, 10);
+  user-select: none;
+}
+
+.thSortable {
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.thSortable:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.thContent {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.sortIcon {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.4;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.thSortable:hover .sortIcon {
+  opacity: 0.8;
+}
+
+.sortIconActive {
+  opacity: 1;
+  color: var(--color-interactive-primary);
+}
+
+.checkTh,
+.checkTd {
+  width: 38px;
+  text-align: center;
+  padding: 0 var(--space-2);
+}
+
+.td {
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Densidade Compacta (32px por linha - Chão de Loja/Cockpit) */
+.compactDensity .th {
+  padding: var(--space-1-5) var(--space-3);
+}
+
+.compactDensity .td {
+  padding: var(--space-1-5) var(--space-3);
+  height: 34px;
+}
+
+/* Densidade Confortável (42px por linha - Relatórios Executivos) */
+.comfortableDensity .th {
+  padding: var(--space-3) var(--space-4);
+}
+
+.comfortableDensity .td {
+  padding: var(--space-3) var(--space-4);
+  height: 44px;
+}
+
+.row {
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+}
+
+/* Zebra Striping Suave (WCAG 2.1 AA) */
+.table tbody tr:nth-child(even) {
+  background-color: var(--bg-surface-elevated, rgba(255, 255, 255, 0.02));
+}
+
+.row:hover {
+  background-color: var(--bg-surface-hover);
+}
+
+/* Linha Selecionada com Destaque Cromático, Borda Ativa e Elevação Suave */
+.rowSelected {
+  background-color: var(--primary-glow) !important;
+  box-shadow: inset 3px 0 0 var(--color-interactive-primary), inset 0 1px 0 var(--border-focus), inset 0 -1px 0 var(--border-focus);
+}
+
+.rowActive {
+  background-color: var(--primary-glow) !important;
+  box-shadow: inset 4px 0 0 var(--color-interactive-primary), inset 0 1px 0 var(--border-focus), inset 0 -1px 0 var(--border-focus);
+}
+
+.rowSelected .td,
+.rowActive .td {
+  border-bottom-color: var(--border-focus);
+}
+
+.rowSelected:hover,
+.rowActive:hover {
+  background-color: var(--primary-glow) !important;
+  filter: brightness(1.03);
+}
+
+.rowClickable {
+  cursor: pointer;
+}
+
+.emptyTd {
+  text-align: center;
+  padding: var(--space-8);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* =============================================================================
+ * BATCH ACTION BAR (Contextual Floating Action Bar - Nielsen Norman Group)
+ * ============================================================================= */
+.batchActionBar {
+  position: sticky;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-surface-elevated);
+  padding: var(--space-2-5) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  z-index: 25;
+  box-sizing: border-box;
+}
+
+.batchActionBarBottom {
+  bottom: 0;
+  border-top: 1px solid var(--border-subtle);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+  animation: slideUpBatch 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.batchActionBarTop {
+  top: 0;
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  animation: slideDownBatch 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDownBatch {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpBatch {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.batchCountGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.batchCountBadge {
+  background-color: var(--color-interactive-primary);
+  color: var(--text-inverse);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.batchCountText {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.batchClearBtn {
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 2px 4px;
+}
+
+.batchClearBtn:hover {
+  color: var(--text-secondary);
+}
+
+.batchButtonsGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.batchActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  border: 1px solid transparent;
+}
+
+.batchBtnIcon {
+  display: flex;
+  align-items: center;
+}
+
+.batchBtnPrimary {
+  background-color: var(--color-interactive-primary);
+  color: var(--text-inverse);
+}
+
+.batchBtnPrimary:hover {
+  filter: brightness(1.1);
+}
+
+.batchBtnSecondary {
+  background-color: var(--bg-surface);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.batchBtnSecondary:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-strong);
+}
+
+.batchBtnDanger {
+  background-color: var(--status-danger-subtle);
+  border-color: var(--status-danger-border);
+  color: var(--status-danger);
+}
+
+.batchBtnDanger:hover {
+  background-color: var(--status-danger);
+  color: var(--text-inverse);
+}
+
+/* =============================================================================
+ * PAGINATION BAR (NN/g Best Practice: Predictable Chunks & Location Memory)
+ * ============================================================================= */
+.paginationBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2-5) var(--space-4);
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--font-size-xs, 12px);
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  box-sizing: border-box;
+}
+
+.paginationInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.paginationCount {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.paginationCount strong {
+  color: var(--text-primary);
+}
+
+.pageSizeGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.pageSizeSelect {
+  background-color: var(--bg-inset);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: 3px 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.pageSizeSelect:focus-visible {
+  border-color: var(--color-interactive-primary);
+  box-shadow: 0 0 0 2px var(--primary-glow);
+}
+
+.paginationControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.pageBtn:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.pageBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: var(--border-subtle);
+}
+
+.pageBtn:focus-visible {
+  outline: 2px solid var(--color-interactive-primary);
+  outline-offset: 1px;
+}
+
+.pageIndicator {
+  padding: 0 var(--space-2);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+/* Skeleton Loading para Linhas da Tabela */
+.skeletonRow {
+  background: transparent !important;
+}
+
+.skeletonRow:hover {
+  background: transparent !important;
+}
+
+.skeletonCell {
+  padding: var(--space-2) var(--space-3);
+  vertical-align: middle;
+}
+
+.skeletonCheckbox {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-xs);
+  margin: 0 auto;
+}

@@ -1,0 +1,311 @@
+.container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--space-4);
+  padding: var(--space-1) 0;
+  align-items: start;
+}
+
+@media (max-width: 680px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+
+.statusHeader {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: var(--space-2-5) var(--space-3);
+}
+
+.statusCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statusLabel {
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.totalValue {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.remainingValueZero {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--status-success);
+}
+
+.remainingValuePending {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--status-warning);
+}
+
+/* Lista de Pagamentos Adicionados */
+.paymentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.paymentsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1-5);
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  padding: var(--space-2);
+  background-color: var(--bg-surface);
+}
+
+.paymentRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  font-size: 11px;
+}
+
+.paymentRowInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.paymentRowHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.paymentRowChangeDetail {
+  font-size: 10px;
+  color: var(--status-success);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  padding-left: 19px;
+}
+
+.changeSummaryBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-xs);
+  padding: 8px 12px;
+}
+
+.changeSummaryLabel {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--status-success);
+}
+
+.changeSummaryValue {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--status-success);
+}
+
+.paymentRowMethod {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.paymentRowNotes {
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.paymentRowRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.paymentRowAmount {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-interactive-primary);
+}
+
+.removeRowBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 3px;
+}
+
+.removeRowBtn:hover {
+  color: var(--status-danger);
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.emptySplits {
+  padding: var(--space-3);
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+/* Formulário de Adicionar Parcela */
+.addSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+
+.methodSelectorRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.methodBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 2px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xs);
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.methodBtn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.methodActive {
+  background-color: var(--color-interactive-primary) !important;
+  border-color: var(--color-interactive-primary) !important;
+  color: var(--text-inverse) !important;
+  font-weight: var(--font-weight-semibold);
+}
+
+.amountInputRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.shortcutsRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.shortcutsLabel {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.notePill {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 3px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.notePill:hover {
+  border-color: var(--color-interactive-primary);
+  color: var(--color-interactive-primary);
+  background-color: var(--bg-surface-elevated);
+}
+
+.fillRemainingBtn {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--color-interactive-primary);
+  color: var(--color-interactive-primary);
+  border-radius: var(--radius-xs);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.fillRemainingBtn:hover {
+  background-color: var(--color-interactive-primary);
+  color: var(--text-inverse);
+}
+
+.addBtnRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+
+.footerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+

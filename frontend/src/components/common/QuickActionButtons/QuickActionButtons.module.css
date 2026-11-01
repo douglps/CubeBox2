@@ -1,0 +1,81 @@
+.actionBar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 2px 4px;
+  max-width: 100%;
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-xs);
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.iconBtn:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.iconBtn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.iconBtn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: 1px;
+}
+
+.iconBtn:disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Variantes */
+.variant_default:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.variant_danger:hover:not(:disabled) {
+  background-color: var(--status-danger-subtle);
+  color: var(--status-danger);
+  border-color: var(--status-danger);
+}
+
+.variant_warning:hover:not(:disabled),
+.variant_warning.isActive {
+  background-color: var(--status-warning-subtle);
+  color: var(--status-warning);
+}
+
+.variant_primary:hover:not(:disabled) {
+  background-color: var(--primary-glow);
+  color: var(--primary);
+}
+
+.variant_success:hover:not(:disabled),
+.variant_success.isActive {
+  background-color: var(--status-success-subtle);
+  color: var(--status-success);
+}

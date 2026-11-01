@@ -1,0 +1,41 @@
+{
+  "project": "CubeBox Mini",
+  "generated_at": "2026-10-31T10:36:44.860329",
+  "schema_version": "1.1.0",
+  "models": {
+    "forecasting": {
+      "artifact": "models/regressor_random_forest.pkl",
+      "algorithm": "RandomForestRegressor",
+      "comparison": {
+        "decision_tree": {
+          "mae": 5.9394,
+          "rmse": 9.2755,
+          "wape": 0.37
+        },
+        "random_forest": {
+          "mae": 5.6459,
+          "rmse": 8.6827,
+          "wape": 0.3517
+        }
+      }
+    },
+    "clustering": {
+      "artifact": "models/cluster_dbscan.pkl",
+      "algorithm": "DBSCAN",
+      "metrics": {
+        "n_clusters": 5,
+        "n_outliers": 0,
+        "total_skus": 93
+      }
+    },
+    "risk_classification": {
+      "artifact": "models/classifier_risk.pkl",
+      "algorithm": "LogisticRegression (Multinomial with StandardScaler)",
+      "metrics": {
+        "accuracy": 0.5951,
+        "macro_f1": 0.5312,
+        "weighted_f1": 0.5466
+      }
+    }
+  }
+}

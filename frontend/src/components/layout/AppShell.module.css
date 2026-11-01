@@ -1,0 +1,451 @@
+/* =============================================================================
+ * APPSHELL MODULE CSS - CUBEBOX 2.0 ENTERPRISE
+ * Layout Cinemático, Smart Sticky Header e Aside Rail Colapsável (US-UI-03)
+ * ============================================================================= */
+
+.appRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--bg-canvas);
+}
+
+/* =============================================================================
+ * HEADER 100% FULL-WIDTH (SMART STICKY)
+ * ============================================================================= */
+.header {
+  width: 100%;
+  height: 60px;
+  min-height: 60px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              min-height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.25s ease,
+              border-color 0.3s ease;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  will-change: transform, height, opacity;
+}
+
+.headerHidden {
+  transform: translateY(-100%);
+  height: 0;
+  min-height: 0;
+  opacity: 0;
+  border-bottom-color: transparent;
+  pointer-events: none;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.brandIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-interactive-primary);
+  color: var(--text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.brandSubtitle {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.02em;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.telemetryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--status-success);
+  background-color: var(--status-success-subtle);
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--status-success-border);
+}
+
+.pulseIcon {
+  animation: pulseLatency 2s infinite ease-in-out;
+}
+
+@keyframes pulseLatency {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.dateBadge {
+  font-size: 11px;
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+}
+
+.hudEngine {
+  color: var(--text-tertiary);
+  font-size: 11px;
+}
+
+.themeToggleWrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.themeToggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.themeToggleBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background-color: var(--bg-surface-hover);
+}
+
+.themeTooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  z-index: var(--z-tooltip, 1600);
+  pointer-events: none;
+  align-items: center;
+  gap: var(--space-1-5);
+}
+
+.themeToggleWrapper:hover .themeTooltip,
+.themeToggleWrapper:focus-within .themeTooltip {
+  display: flex;
+}
+
+/* =============================================================================
+ * BODY WRAPPER & SIDEBAR ASIDE (RAIL COLAPSÁVEL 68px <-> 240px)
+ * ============================================================================= */
+.bodyWrapper {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.aside {
+  width: 240px;
+  height: 100%;
+  background-color: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 50;
+  box-sizing: border-box;
+}
+
+.asideCollapsed {
+  width: 68px;
+}
+
+.railHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-3) var(--space-3) var(--space-2);
+}
+
+.asideCollapsed .railHeader {
+  justify-content: center;
+  padding: var(--space-3) 0 var(--space-2);
+}
+
+.railToggleBtn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.railToggleBtn:hover {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.railIconRotated {
+  transform: rotate(180deg);
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.asideCollapsed .navList {
+  padding: var(--space-2) var(--space-2);
+}
+
+.navItemWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2-5) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--duration-fast) var(--ease-standard);
+  box-sizing: border-box;
+}
+
+.asideCollapsed .navBtn {
+  justify-content: center;
+  padding: var(--space-2-5) 0;
+}
+
+.navBtn:hover {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+}
+
+.navBtnActive {
+  background-color: var(--bg-surface-elevated) !important;
+  color: var(--color-interactive-primary) !important;
+  font-weight: 600;
+  border-left: 3px solid var(--color-interactive-primary);
+}
+
+.asideCollapsed .navBtnActive {
+  border-left: none;
+  background-color: var(--color-interactive-primary-subtle) !important;
+}
+
+.navIcon {
+  flex-shrink: 0;
+}
+
+.navLabel {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navKbd {
+  font-size: 10px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+}
+
+/* Tooltip Flutuante no Modo Rail */
+.floatingTooltip {
+  display: none;
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  z-index: var(--z-tooltip, 1600);
+  pointer-events: none;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.navItemWrapper:hover .floatingTooltip,
+.navItemWrapper:focus-within .floatingTooltip {
+  display: flex;
+}
+
+.tooltipLabel {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tooltipKbd {
+  font-size: 10px;
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.asideFooter {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  background-color: var(--bg-surface);
+}
+
+.asideCollapsed .asideFooter {
+  justify-content: center;
+  padding: var(--space-3) 0;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--status-success);
+  box-shadow: 0 0 6px var(--status-success);
+  flex-shrink: 0;
+}
+
+/* =============================================================================
+ * ÁREA PRINCIPAL & HUD DE RODAPÉ (RODAPÉ ESTRITAMENTE FIXO)
+ * ============================================================================= */
+.mainContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-canvas);
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--bg-canvas);
+}
+
+.viewContent {
+  flex: 1;
+  padding: var(--space-6);
+  min-height: auto;
+}
+
+.footerHud {
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-2-5) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  z-index: 80;
+  min-height: 38px;
+  box-sizing: border-box;
+}
+
+.hudLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hudRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}

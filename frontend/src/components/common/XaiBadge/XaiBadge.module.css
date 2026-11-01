@@ -1,0 +1,143 @@
+.xaiBadgeWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.xaiBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(99, 102, 241, 0.15));
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: var(--color-interactive-primary);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: help;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.xaiBadge:hover, .xaiBadge:focus-visible {
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(99, 102, 241, 0.25));
+  border-color: var(--color-interactive-primary);
+  box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+  outline: none;
+}
+
+.tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  background: var(--bg-surface-elevated, #1e222d);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  border-radius: var(--radius-sm, 6px);
+  padding: 12px 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  z-index: 1200;
+  pointer-events: none;
+  font-size: 11px;
+  color: var(--text-primary, #f1f5f9);
+  line-height: 1.45;
+  white-space: normal;
+  text-transform: none;
+  font-weight: normal;
+  letter-spacing: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.tooltipCenter {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltipLeft {
+  left: 0;
+  transform: translateX(0);
+}
+
+.tooltipRight {
+  right: 0;
+  left: auto;
+  transform: translateX(0);
+}
+
+.badgeSm {
+  padding: 2px 7px;
+  font-size: 10px;
+  gap: 4px;
+}
+
+.wrapperSm {
+  font-size: 10px;
+}
+
+.xaiBadgeWrapper:hover .tooltipCenter,
+.xaiBadgeWrapper:focus-within .tooltipCenter {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.xaiBadgeWrapper:hover .tooltipLeft,
+.xaiBadgeWrapper:focus-within .tooltipLeft {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) translateY(0);
+}
+
+.xaiBadgeWrapper:hover .tooltipRight,
+.xaiBadgeWrapper:focus-within .tooltipRight {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) translateY(0);
+}
+
+.tooltipHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: var(--color-interactive-primary);
+}
+
+.tooltipRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.tooltipLabel {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.tooltipValue {
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: right;
+  word-break: break-word;
+}
+
+.tooltipFeatures {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--border-subtle);
+  color: var(--text-tertiary);
+  font-size: 10px;
+  line-height: 1.4;
+  word-break: break-word;
+}

@@ -1,0 +1,12 @@
+{
+  "initial_records": 143118,
+  "duplicates_removed": 4067,
+  "invalid_dates_removed": 10,
+  "negative_or_zero_qty_removed": 10,
+  "outliers_qty_removed": 0,
+  "null_categories_imputed": 4261,
+  "null_prices_imputed": 2862,
+  "null_payment_imputed": 4290,
+  "final_clean_records": 139031,
+  "integrity_rate_pct": 97.14
+}

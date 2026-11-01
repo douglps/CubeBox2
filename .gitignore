@@ -1,0 +1,59 @@
+# =============================================================================
+# CubeBox Mini - Git Ignore Sentinel Rules
+# =============================================================================
+
+# --- Python & Ambientes Virtuais ---
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Node & Frontend ---
+node_modules/
+dist/
+build/
+.vite/
+*.log
+
+# --- Variáveis de Ambiente & Chaves Sensíveis (Zero Secrets) ---
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+
+# --- Bancos de Dados & Datasets (Zero PII & Data Privacy) ---
+*.db
+*.sqlite3
+data/raw/
+data/processed/
+data/*.db
+
+# --- Modelos de Machine Learning & Binários Pesados ---
+models/*.pkl
+models/*.joblib
+models/*.onnx
+models/*.pt
+models/*.h5
+
+# --- Documentos Temporários & Lock Files ---
+.~lock.*
+*.backup.docx
+*.tmp
+
+# --- IDEs, Caches de Agentes & Sistema Operacional ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.history/
+.antigravity/
+.agents/

@@ -1,0 +1,353 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.tabNavigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-3);
+}
+
+.navButton {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--ease-standard);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.navButton:hover {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+}
+
+.navButtonActive {
+  background: var(--bg-surface-elevated);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- TAB 1: SANDBOX PROPS EXPLORER --- */
+.explorerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .explorerGrid {
+    grid-template-columns: 320px 1fr;
+  }
+}
+
+.controlsPanel {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.controlLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btnGroupOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.optionPill {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.optionPill:hover {
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.optionPillActive {
+  background: var(--primary);
+  color: #FFFFFF;
+  border-color: var(--primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.previewStage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.stageCanvas {
+  background: var(--bg-canvas);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-md);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.snippetCard {
+  background: #121316;
+  border: 1px solid #282a30;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  position: relative;
+}
+
+.snippetHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid #282a30;
+  padding-bottom: var(--space-2);
+}
+
+.snippetTitle {
+  font-size: var(--font-size-xs);
+  color: #9ba1a6;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.copyButton {
+  background: #23272e;
+  border: 1px solid #3e4451;
+  color: #abb2bf;
+  padding: 4px 10px;
+  font-size: 11px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.copyButton:hover {
+  background: #2c313a;
+  color: #fff;
+}
+
+.codeBlock {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #e5c07b;
+  overflow-x: auto;
+}
+
+/* --- TAB 2: DO'S AND DON'TS --- */
+.dosDontsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .dosDontsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.doCard {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--status-success);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dontCard {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--status-danger);
+  border-left-width: 4px;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.headerSuccess {
+  color: var(--status-success);
+}
+
+.headerDanger {
+  color: var(--status-danger);
+}
+
+.cardContent {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: var(--leading-normal);
+}
+
+.visualExample {
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+/* --- TAB 3: TOKEN INSPECTOR (W3C DTCG) --- */
+.tokenSearchInput {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.tokenSearchInput:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--shadow-glow);
+}
+
+.tokensTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-xs);
+}
+
+.tokensTable th {
+  text-align: left;
+  padding: var(--space-3);
+  border-bottom: 2px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.tokensTable td {
+  padding: var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.tokenBadgeType {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.tokenColorSample {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: var(--space-2);
+}
+
+/* --- TAB 4: A11Y & AI ARCHITECTURE --- */
+.architectureCard {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.a11yGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.a11yItem {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+
+.a11yHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-1);
+}
+
+.a11yTitle {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.a11yBadge {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: var(--status-success-subtle);
+  color: var(--status-success);
+  border-radius: var(--radius-xs);
+  font-weight: 600;
+}

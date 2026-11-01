@@ -1,0 +1,200 @@
+.container {
+  padding: 24px 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.filterBar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 280px;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.select {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--color-interactive-primary);
+}
+
+.tableCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.actionsCell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.paymentBadgesList {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+/* Modal de Cupom Térmico 80mm */
+.receiptContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.receiptPaper {
+  width: 320px;
+  background: #ffffff;
+  color: #1a1a1a;
+  padding: 24px 20px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px dashed #cccccc;
+  border-radius: 4px;
+}
+
+.receiptHeader {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.storeName {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.storeDetails {
+  font-size: 10px;
+  color: #555555;
+  margin-top: 2px;
+}
+
+.receiptDivider {
+  border-top: 1px dashed #777777;
+  margin: 10px 0;
+}
+
+.receiptMeta {
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
+.receiptItemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.receiptItemsTable th {
+  border-bottom: 1px dashed #777777;
+  padding: 4px 0;
+  text-align: left;
+  font-size: 11px;
+}
+
+.receiptItemsTable td {
+  padding: 4px 0;
+  font-size: 11px;
+}
+
+.receiptTotals {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.totalHighlight {
+  font-size: 14px;
+  font-weight: bold;
+  border-top: 1px dashed #777777;
+  border-bottom: 1px dashed #777777;
+  padding: 6px 0;
+  margin: 4px 0;
+}
+
+.receiptFooter {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 10px;
+  color: #555555;
+}
+
+.barcodeSimulated {
+  font-size: 24px;
+  letter-spacing: 4px;
+  margin-top: 8px;
+}
+
+/* Impressão direta */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .receiptPaper, .receiptPaper * {
+    visibility: visible;
+  }
+  .receiptPaper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm;
+    box-shadow: none;
+    border: none;
+    margin: 0;
+    padding: 10px;
+  }
+}

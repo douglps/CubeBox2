@@ -1,0 +1,91 @@
+.spinnerContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.spinner {
+  border-radius: var(--radius-full, 9999px);
+  border-style: solid;
+  border-color: transparent;
+  animation: spin 0.75s linear infinite;
+  box-sizing: border-box;
+}
+
+/* Tamanhos */
+.sm {
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+.md {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.lg {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+/* Variantes com Contraste Alto e Seguro para Light & Dark Mode */
+.primary {
+  border-color: var(--spinner-track, rgba(2, 132, 199, 0.16));
+  border-top-color: var(--spinner-active, var(--primary, #0284c7));
+}
+
+.secondary {
+  border-color: var(--border-subtle, rgba(86, 103, 114, 0.2));
+  border-top-color: var(--text-secondary, #566772);
+}
+
+.neutral {
+  border-color: var(--border-subtle, rgba(55, 55, 55, 0.15));
+  border-top-color: var(--text-primary, #373737);
+}
+
+.white {
+  border-color: rgba(255, 255, 255, 0.25);
+  border-top-color: #ffffff;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Acessibilidade WCAG 2.1 - Redução de Movimento */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: pulseSlow 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulseSlow {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+}

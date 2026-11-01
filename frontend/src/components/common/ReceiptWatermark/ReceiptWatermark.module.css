@@ -1,0 +1,99 @@
+.receiptContainer {
+  position: relative;
+  background-color: var(--bg-surface-elevated);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+}
+
+.headerAlert {
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--status-warning);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  padding: 4px;
+  border-radius: var(--radius-xs);
+  margin-bottom: var(--space-3);
+  letter-spacing: 0.5px;
+}
+
+/* Padrão Repetido de Carimbos em Ângulo Diagonal (Watermark Subtil) */
+.watermarkPattern {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: rotate(-18deg);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.06;
+  z-index: 0;
+}
+
+:global([data-theme="dark"]) .watermarkPattern {
+  opacity: 0.08;
+}
+
+.stamp {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--status-danger);
+  border: 1px dashed var(--status-danger);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.receiptBody {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.receiptMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: var(--space-2);
+}
+
+.receiptContent {
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.receiptFooter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 10px;
+  color: var(--text-muted);
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: var(--space-2);
+}
+
+.legalNotice {
+  font-size: 9px;
+  color: var(--text-muted);
+  line-height: 1.3;
+}

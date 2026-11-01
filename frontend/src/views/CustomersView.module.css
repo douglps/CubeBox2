@@ -1,0 +1,172 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+}
+
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 280px;
+}
+
+.tableCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Master-Detail Layout de Clientes */
+.masterDetailLayout {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.tableSection {
+  flex: 1;
+  min-width: 0;
+  transition: all var(--transition-normal);
+}
+
+.detailsSection {
+  width: 420px;
+  max-width: 420px;
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--space-4);
+  animation: slideInRight 220ms var(--ease-out-quint);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 1633px) {
+  .detailsSection {
+    display: none;
+  }
+}
+
+.customerName {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.customerEmail {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.docBadge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background-color: var(--bg-surface-elevated);
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.ltvValue {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-interactive-primary);
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+}
+
+.feedbackSuccess {
+  background-color: var(--status-success-bg);
+  border-left: 4px solid var(--status-success);
+  color: var(--status-success-fg);
+}
+
+.feedbackError {
+  background-color: var(--status-danger-bg);
+  border-left: 4px solid var(--status-danger);
+  color: var(--status-danger-fg);
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.selectInput {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-3);
+  height: 38px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  outline: none;
+}
+
+.selectInput:focus {
+  border-color: var(--color-interactive-primary);
+}
+
+.fieldLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
