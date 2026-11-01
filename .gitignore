@@ -20,6 +20,7 @@ node_modules/
 dist/
 build/
 .vite/
+*.tsbuildinfo
 *.log
 
 # --- Variáveis de Ambiente & Chaves Sensíveis (Zero Secrets) ---

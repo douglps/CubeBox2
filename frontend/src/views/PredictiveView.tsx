@@ -102,6 +102,7 @@ export const PredictiveView: React.FC = () => {
   const [orderQty, setOrderQty] = useState<number>(0);
   const [supplierName, setSupplierName] = useState('Distribuidora Central SP');
   const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
+  const [processingProductIds, setProcessingProductIds] = useState<number[]>([]);
   const [errorNotice, setErrorNotice] = useState<{ message: string; isTransient: boolean } | null>(null);
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
@@ -233,29 +234,36 @@ export const PredictiveView: React.FC = () => {
   };
 
   const handleOpenPurchaseModal = (item: ReorderSuggestionItem) => {
+    if (processingProductIds.includes(item.product_id)) return;
     setPurchaseModalItem(item);
     setOrderQty(item.suggested_reorder_qty > 0 ? item.suggested_reorder_qty : 20);
     setSupplierName('Distribuidora Central SP');
   };
 
   const handleConfirmPurchaseOrder = async () => {
-    if (!purchaseModalItem || orderQty <= 0) return;
+    if (!purchaseModalItem || orderQty <= 0 || isSubmittingOrder) return;
+    const targetProductId = purchaseModalItem.product_id;
+    const targetProductName = purchaseModalItem.product_name;
+    const qty = orderQty;
+    const supplier = supplierName;
+
     setIsSubmittingOrder(true);
     setFeedback(null);
+    setProcessingProductIds((prev) => (prev.includes(targetProductId) ? prev : [...prev, targetProductId]));
 
     try {
       await createPurchaseOrder({
-        product_id: purchaseModalItem.product_id,
-        quantity: orderQty,
-        supplier_name: supplierName,
+        product_id: targetProductId,
+        quantity: qty,
+        supplier_name: supplier,
       });
 
       setFeedback({
         type: 'success',
-        message: `Pedido de compra de ${orderQty} un. para ${purchaseModalItem.product_name} emitido com status PENDENTE.`,
+        message: `Pedido de compra de ${qty} un. para ${targetProductName} emitido com status PENDENTE.`,
       });
       setPurchaseModalItem(null);
-      // Atualiza pedidos, estoque e sugestões recalculadas sem loading bloqueante
+      // Atualiza pedidos, estoque e sugestões recalculadas enquanto a linha do item exibe spinner de load
       const [updatedPurchases, updatedProds, updatedSuggs] = await Promise.all([
         fetchPurchases(),
         fetchProducts(),
@@ -271,6 +279,7 @@ export const PredictiveView: React.FC = () => {
       });
     } finally {
       setIsSubmittingOrder(false);
+      setProcessingProductIds((prev) => prev.filter((id) => id !== targetProductId));
     }
   };
 
@@ -311,12 +320,28 @@ export const PredictiveView: React.FC = () => {
       key: 'product_name',
       header: 'Produto / Categoria',
       sortable: true,
-      render: (item) => (
-        <div>
-          <div className={styles.productName}>{item.product_name}</div>
-          <div className={styles.productCategory}>{item.category}</div>
-        </div>
-      ),
+      render: (item) => {
+        const isProcessing = processingProductIds.includes(item.product_id);
+        return (
+          <div className={styles.productCell}>
+            <div className={styles.productNameRow}>
+              <div className={styles.productName}>{item.product_name}</div>
+              {isProcessing && (
+                <span
+                  className={styles.processingBadge}
+                  role="status"
+                  aria-live="polite"
+                  aria-label={`Processando aprovação de compra para ${item.product_name}`}
+                >
+                  <Spinner size="sm" variant="primary" label="Emitindo ordem de compra" />
+                  <span>Processando...</span>
+                </span>
+              )}
+            </div>
+            <div className={styles.productCategory}>{item.category}</div>
+          </div>
+        );
+      },
     },
     {
       key: 'current_stock',
@@ -386,16 +411,23 @@ export const PredictiveView: React.FC = () => {
       key: 'actions',
       header: 'Ação Recomendada',
       align: 'right',
-      render: (item) => (
-        <Button
-          variant={item.suggested_reorder_qty > 0 ? 'primary' : 'secondary'}
-          size="sm"
-          icon={<ShoppingCart size={14} />}
-          onClick={() => handleOpenPurchaseModal(item)}
-        >
-          {item.suggested_reorder_qty > 0 ? 'Aprovar Compra' : 'Comprar Extra'}
-        </Button>
-      ),
+      render: (item) => {
+        const isProcessing = processingProductIds.includes(item.product_id);
+        return (
+          <Button
+            variant={item.suggested_reorder_qty > 0 ? 'primary' : 'secondary'}
+            size="sm"
+            icon={isProcessing ? undefined : <ShoppingCart size={14} />}
+            loading={isProcessing}
+            loadingText="Processando..."
+            disabled={isProcessing}
+            onClick={() => handleOpenPurchaseModal(item)}
+            title={isProcessing ? 'Ordem de compra em processamento...' : undefined}
+          >
+            {item.suggested_reorder_qty > 0 ? 'Aprovar Compra' : 'Comprar Extra'}
+          </Button>
+        );
+      },
     },
   ];
 
@@ -954,7 +986,11 @@ export const PredictiveView: React.FC = () => {
       {/* Purchase Modal */}
       <Modal
         isOpen={!!purchaseModalItem}
-        onClose={() => setPurchaseModalItem(null)}
+        onClose={() => {
+          if (!isSubmittingOrder) {
+            setPurchaseModalItem(null);
+          }
+        }}
         title="Aprovar Emissão de Pedido de Compra"
         size="md"
         footer={
@@ -969,6 +1005,12 @@ export const PredictiveView: React.FC = () => {
             <Button
               variant="primary"
               loading={isSubmittingOrder}
+              loadingText="Emitindo Ordem..."
+              disabled={
+                isSubmittingOrder ||
+                orderQty <= 0 ||
+                (purchaseModalItem ? processingProductIds.includes(purchaseModalItem.product_id) : false)
+              }
               onClick={handleConfirmPurchaseOrder}
             >
               Confirmar Emissão da Ordem
@@ -997,6 +1039,7 @@ export const PredictiveView: React.FC = () => {
               mode="integer"
               suffix="un"
               min={1}
+              disabled={isSubmittingOrder}
               label="Quantidade do Pedido de Compra (Unidades)"
               value={orderQty}
               onChange={(val) => setOrderQty(Math.max(1, val))}
@@ -1005,6 +1048,7 @@ export const PredictiveView: React.FC = () => {
             <TextInput
               label="Nome do Fornecedor / Distribuidor"
               value={supplierName}
+              disabled={isSubmittingOrder}
               onChange={(e) => setSupplierName(e.target.value)}
             />
           </div>

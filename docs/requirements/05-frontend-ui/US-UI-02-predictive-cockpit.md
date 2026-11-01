@@ -29,4 +29,10 @@ dependencies:
 #### Cenário 2: Aprovação de sugestão de compra
 - **Dado** que a tabela recomenda comprar 50 unidades de um item com risco alto de ruptura,
 - **Quando** o gestor clica no botão "Aprovar Compra",
-- **Então** o sistema exibe confirmação visual da ordem e atualiza a projeção de abastecimento.
+- **Então** o sistema abre o modal com valores pré-preenchidos pela IA.
+
+#### Cenário 3: Prevenção de duplicidade e feedback visual de processamento
+- **Dado** que o gestor clicou em "Confirmar Emissão da Ordem" no modal de compra,
+- **Quando** a requisição for disparada,
+- **Então** o botão de emitir ordem no modal deve permanecer bloqueado (disabled/loading) sem permitir novo clique,
+- **E** o item correspondente na lista deve exibir um indicador de processamento com spinner/load e botão de ação bloqueado até que o recálculo do backend seja concluído e a lista seja atualizada.

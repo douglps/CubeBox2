@@ -166,9 +166,45 @@
   color: var(--text-secondary);
 }
 
+.productCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.productNameRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
 .productName {
   font-weight: var(--font-weight-medium);
   color: var(--text-primary);
+}
+
+.processingBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  background-color: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--color-interactive-primary);
+  padding: 1px 6px;
+  border-radius: var(--radius-xs);
+  animation: pulseBadge 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulseBadge {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .productCategory {
