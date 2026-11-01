@@ -58,6 +58,9 @@ class MLService:
 
         if rf_path.exists():
             self.rf_payload = joblib.load(rf_path)
+            # Fix para inferência de alta performance em single-core: evita overhead de thread-pool joblib
+            if hasattr(self.rf_payload.get('model'), 'n_jobs'):
+                self.rf_payload['model'].n_jobs = 1
         if dbscan_path.exists():
             self.dbscan_payload = joblib.load(dbscan_path)
         if risk_path.exists():

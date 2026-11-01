@@ -8,6 +8,7 @@ Atende a US-API-02 e SDD-CBOX-API-V1.0.0:
 - PATCH /api/purchases/{id}/receive (Confirmação de recebimento físico)
 """
 import uuid
+import time
 from datetime import datetime
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -69,13 +70,30 @@ def get_demand_forecast(
 # ==========================================
 # MODEL SERVING: SUGESTÃO DE REABASTECIMENTO
 # ==========================================
+_REORDER_CACHE = {
+    "timestamp": 0.0,
+    "data": []
+}
+
+
+def invalidate_reorder_cache():
+    global _REORDER_CACHE
+    _REORDER_CACHE["timestamp"] = 0.0
+
+
 @router.get("/ml/reorder-suggestions", response_model=List[ReorderSuggestionResponse])
-def get_reorder_suggestions(db: Session = Depends(get_db)):
+def get_reorder_suggestions(force: bool = False, db: Session = Depends(get_db)):
     """
     Calcula sugestão automatizada de compras para todos os produtos:
     Qtd Compra = max(0, Demanda 7D + Estoque Minimo + Perdas Estimadas - Estoque Atual)
     Incorpora risco probabilístico pelo Gaussian Naive Bayes e cluster DBSCAN.
+    Utiliza cache em memória com TTL de 5 minutos para performance sub-segundo.
     """
+    global _REORDER_CACHE
+    now = time.time()
+    if not force and _REORDER_CACHE["data"] and (now - _REORDER_CACHE["timestamp"] < 300):
+        return _REORDER_CACHE["data"]
+
     products = db.query(Product).all()
     suggestions = []
     today_weekday = datetime.now().weekday()
@@ -130,6 +148,7 @@ def get_reorder_suggestions(db: Session = Depends(get_db)):
     # Ordenar por prioridade: Alto Risco primeiro e maior quantidade sugerida
     order_map = {'Alto Risco': 0, 'Médio Risco': 1, 'Medio Risco': 1, 'Baixo Risco': 2}
     suggestions.sort(key=lambda s: (order_map.get(s.risco_ruptura, 3), -s.quantidade_sugerida))
+    _REORDER_CACHE = {"timestamp": now, "data": suggestions}
     return suggestions
 
 
@@ -174,6 +193,7 @@ def create_purchase_order(order_in: PurchaseOrderCreate, db: Session = Depends(g
     db.add(po)
     db.commit()
     db.refresh(po)
+    invalidate_reorder_cache()
 
     return PurchaseOrderResponse(
         id=po.id,
@@ -232,6 +252,7 @@ def receive_purchase_order(order_id: int, db: Session = Depends(get_db)):
 
     db.commit()
     db.refresh(po)
+    invalidate_reorder_cache()
 
     return PurchaseOrderResponse(
         id=po.id,
